@@ -19,8 +19,20 @@ public class UserService {
     @Transactional
     public User createUser(String email, String rawPassword,
                            String nombre, String direccion, String celular) {
+
+        // Obtener el último ID
+        String lastId = userRepository.findLastUserId().orElse("CLI-0000000000000000");
+
+        // Extraer parte numérica y sumar 1
+        long nextNumber = Long.parseLong(lastId.substring(4)) + 1;
+
+        // Formatear el nuevo ID con ceros
+        String newId = String.format("CLI-%016d", nextNumber);
+
         var now = Instant.now();
+
         var user = User.builder()
+                .id(newId)
                 .email(email)
                 .passwordHash(passwordEncoder.encode(rawPassword))
                 .enabled(true)
@@ -30,8 +42,11 @@ public class UserService {
                 .createdAt(now)
                 .updatedAt(now)
                 .build();
+
         return userRepository.save(user);
     }
+
+
     @Transactional
     public void updatePassword(String email, String rawPassword) {
         var user = userRepository.findByEmail(email)
