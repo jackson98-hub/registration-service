@@ -21,7 +21,7 @@ public class UserService {
                            String nombre, String direccion, String celular) {
 
         // Obtener el último ID
-        String lastId = userRepository.findLastUserId().orElse("CLI-0000000000000000");
+        String lastId = userRepository.findLastUserId().orElse("CLI-000");
 
         // Extraer parte numérica y sumar 1
         long nextNumber = Long.parseLong(lastId.substring(4)) + 1;
