@@ -27,6 +27,7 @@ public class UserService {
                 .nombre(nombre)
                 .direccion(direccion)
                 .celular(celular)
+                .rol("CLIENTE")
                 .createdAt(now)
                 .updatedAt(now)
                 .build();

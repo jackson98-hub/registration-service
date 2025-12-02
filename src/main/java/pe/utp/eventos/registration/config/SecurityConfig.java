@@ -21,12 +21,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults()) // usa el bean de CorsConfig
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers("/register/**", "/password/**").permitAll()
-                        .anyRequest().denyAll()
+                        .requestMatchers(
+                                "/register/**",
+                                "/password/**",
+                                "/api/usuarios/**"  // Asegúrate de incluir este patrón
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 );
         return http.build();
     }

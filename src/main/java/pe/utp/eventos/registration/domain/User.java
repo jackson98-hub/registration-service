@@ -40,6 +40,9 @@ public class User {
     private String celular;
 
     @Column(nullable = false)
+    private String rol = "CLIENTE";
+
+    @Column(nullable = false)
     private Instant createdAt;
 
     @Column(nullable = false)
